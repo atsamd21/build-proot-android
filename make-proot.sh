@@ -12,7 +12,7 @@ do
 
 set-arch $ARCH
 
-export CFLAGS="-I$STATIC_ROOT/include -Werror=implicit-function-declaration"
+export CFLAGS="-I$STATIC_ROOT/include"
 export LDFLAGS="-L$STATIC_ROOT/lib"
 export PROOT_UNBUNDLE_LOADER='../libexec/proot'
 
@@ -44,3 +44,15 @@ done
 )
 
 done
+
+cd "$INSTALL_ROOT/bin/$PROOT_UNBUNDLE_LOADER"
+
+mv loader libloader.so
+mv loader32 libloader32.so
+
+cd "$INSTALL_ROOT/bin"
+
+mv proot libproot.so
+
+
+

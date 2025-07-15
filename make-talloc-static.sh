@@ -5,6 +5,15 @@ shopt -s nullglob
 
 . ./config
 
+WSCRIPT_FILE="build/talloc-$TALLOC_V/lib/replace/wscript"
+
+if [ ! -f "$WSCRIPT_FILE" ]; then
+  echo "Error: $WSCRIPT_FILE not found."
+  exit 1
+fi
+
+sed -i '/replace_test_cflags = '\'''\''/,/^[[:space:]]*)[[:space:]]*$/ s/^/# /' "$WSCRIPT_FILE"
+
 cd "$BUILD_DIR/talloc-$TALLOC_V"
 
 DEF_CFLAGS="$CFLAGS"
