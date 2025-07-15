@@ -16,22 +16,21 @@ sudo apt-get install gawk -y
 install_ndk() {
     echo -e "Setting up Android NDK..."
 
-    mkdir -p "$ANDROID_SDK_ROOT"
-
-    if [ ! -d "$NDK_ROOT" ]; then
+    if [ ! -d "$NDK" ]; then
         echo "Downloading Android NDK..."
-        wget "$NDK_DOWNLOAD_URL" -O "/tmp/${NDK_FILENAME}" || {
+        wget "$NDK_DOWNLOAD_URL" -O "/tmp/$NDK_FILENAME" || {
             echo -e "Failed to download Android NDK"
             exit 1
         }
 
         echo "Extracting NDK..."
-        unzip -q "/tmp/${NDK_FILENAME}" -d "$ANDROID_SDK_ROOT"
+        mkdir -p "$NDK"
+        unzip -q "/tmp/$NDK_FILENAME" -d "/tmp"
+        mv /tmp/android-ndk-r25b/* "$NDK/"
         rm "/tmp/${NDK_FILENAME}"
-        mv "$ANDROID_SDK_ROOT/android-ndk-r25b" "$NDK_ROOT"
     fi
 
-    if [ ! -f "$NDK_ROOT/ndk-build" ]; then
+    if [ ! -f "$NDK/ndk-build" ]; then
         echo -e "NDK installation failed"
         exit 1
     fi
